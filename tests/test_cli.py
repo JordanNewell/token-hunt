@@ -104,3 +104,26 @@ def test_list_empty_when_no_leaks(runner, tmp_path, monkeypatch):
     result = runner.invoke(main, ["list"])
     assert result.exit_code == 0
     assert "no open" in result.output.lower() or "0 leak" in result.output.lower()
+
+
+def test_close_marks_leak_closed(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+    runner.invoke(main, ["scan", "--stdin"], input=ZAI_KEY)
+
+    result = runner.invoke(main, ["close", "1", "--note", "rotated"])
+    assert result.exit_code == 0
+
+    list_result = runner.invoke(main, ["list"])
+    assert "no open" in list_result.output.lower() or list_result.output.strip() == ""
+
+
+def test_close_nonexistent_id_fails(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+    result = runner.invoke(main, ["close", "999"])
+    assert result.exit_code != 0
