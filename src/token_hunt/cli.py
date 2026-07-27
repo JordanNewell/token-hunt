@@ -122,11 +122,75 @@ def close(leak_id, note):
 @main.command()
 @click.argument("path", type=click.Path(exists=True, file_okay=False))
 @click.option("--context", default="PostToolUse:Read")
-def watch(path, context):
+@click.option("--exit-after", type=int, default=0,
+              help="Exit after N seconds (0 = run forever). Test helper.")
+def watch(path, context, exit_after):
     """Watch a directory for new transcript files and scan them."""
-    # Implemented in Task 14
-    click.echo("not yet implemented", err=True)
-    sys.exit(1)
+    import time as _time
+    from pathlib import Path as _Path
+
+    from watchdog.events import FileSystemEventHandler
+    from watchdog.observers import Observer
+
+    from token_hunt.engine import scan as scan_engine
+    from token_hunt.store import LeakRecord, Store
+    from token_hunt.types import ScanContext
+    from dataclasses import asdict
+    import datetime as _dt
+    import json as _json
+
+    watched = _Path(path)
+    click.echo(f"watching {watched} for new files...")
+
+    class Handler(FileSystemEventHandler):
+        def on_created(self, event):
+            if event.is_directory:
+                return
+            self._scan_file(event.src_path)
+
+        def on_modified(self, event):
+            if event.is_directory:
+                return
+            self._scan_file(event.src_path)
+
+        def _scan_file(self, file_path):
+            try:
+                text = _Path(file_path).read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                return
+            ctx = ScanContext(detection_point=context, file_path=file_path)
+            result = scan_engine(text, ctx)
+            if result.matches:
+                store = Store()
+                for m in result.matches:
+                    store.append(LeakRecord(
+                        id=None,
+                        ts=_dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
+                        kind=m.kind,
+                        source=m.detection_point,
+                        fingerprint=m.fingerprint,
+                        rotate_url=m.rotate_url,
+                        status="open",
+                    ))
+                click.echo(f"⚠️  {file_path}: {result.count} leak(s) detected")
+            else:
+                click.echo(f"✓ {file_path}: clean")
+
+    observer = Observer()
+    observer.schedule(Handler(), str(watched), recursive=True)
+    observer.start()
+
+    try:
+        if exit_after > 0:
+            _time.sleep(exit_after)
+        else:
+            while True:
+                _time.sleep(1)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        observer.stop()
+        observer.join()
 
 
 if __name__ == "__main__":

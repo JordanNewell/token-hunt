@@ -127,3 +127,30 @@ def test_close_nonexistent_id_fails(runner, tmp_path, monkeypatch):
     monkeypatch.setenv("HOME", str(fake_home))
     result = runner.invoke(main, ["close", "999"])
     assert result.exit_code != 0
+
+
+import time
+
+def test_watch_detects_new_file(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+
+    watch_dir = tmp_path / "watched"
+    watch_dir.mkdir()
+
+    import threading
+    def write_after_delay():
+        time.sleep(0.5)
+        (watch_dir / "leak.txt").write_text(f"key={ZAI_KEY}")
+
+    t = threading.Thread(target=write_after_delay)
+    t.start()
+
+    result = runner.invoke(main, ["watch", str(watch_dir), "--exit-after", "3"])
+    t.join()
+
+    log = fake_home / ".token-hunt" / "rotations.log"
+    assert log.is_file()
+    assert "zai-api-key" in log.read_text()
