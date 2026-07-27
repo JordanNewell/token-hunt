@@ -19,11 +19,60 @@ def main() -> None:
 @click.option("--context", default="UserPromptSubmit",
               help="Detection point (UserPromptSubmit, PreToolUse:Bash, etc.)")
 @click.option("--format", "fmt", default="text", type=click.Choice(["text", "json"]))
-def scan(path, stdin, context, fmt):
+@click.option("--no-log", is_flag=True, help="Don't write to rotations.log.")
+def scan(path, stdin, context, fmt, no_log):
     """Scan a file or stdin for secret leaks."""
-    # Implemented in Task 11
-    click.echo("not yet implemented", err=True)
-    sys.exit(1)
+    import json as _json
+    import sys
+    from pathlib import Path as _Path
+
+    from token_hunt.engine import scan as scan_engine
+    from token_hunt.store import LeakRecord, Store
+    from token_hunt.types import ScanContext
+    from dataclasses import asdict
+
+    if stdin:
+        text = sys.stdin.read()
+        file_path = None
+    elif path:
+        text = _Path(path).read_text(encoding="utf-8", errors="replace")
+        file_path = str(path)
+    else:
+        click.echo("error: provide a PATH or use --stdin", err=True)
+        sys.exit(2)
+
+    ctx = ScanContext(detection_point=context, file_path=file_path)
+    result = scan_engine(text, ctx)
+
+    if not no_log and result.matches:
+        store = Store()
+        for m in result.matches:
+            store.append(LeakRecord(
+                id=None,
+                ts=__import__("datetime").datetime.now(__import__("datetime").timezone.utc)
+                    .isoformat(timespec="seconds"),
+                kind=m.kind,
+                source=m.detection_point,
+                fingerprint=m.fingerprint,
+                rotate_url=m.rotate_url,
+                status="open",
+            ))
+
+    if fmt == "json":
+        click.echo(_json.dumps({
+            "count": result.count,
+            "matches": [asdict(m) for m in result.matches],
+        }, indent=2))
+    else:
+        if not result.matches:
+            click.echo("no leaks detected")
+        else:
+            click.echo(f"⚠️  {result.count} potential leak(s) detected:")
+            for m in result.matches:
+                fp_preview = m.fingerprint[:8] if m.fingerprint else "n/a"
+                click.echo(f"  - {m.kind} (fp={fp_preview}) @ line {m.line}")
+                if m.rotate_url:
+                    click.echo(f"    rotate: {m.rotate_url}")
 
 
 @main.command(name="list")
