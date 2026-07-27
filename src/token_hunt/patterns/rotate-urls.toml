@@ -1,0 +1,53 @@
+# Provider metadata. Used by `token-hunt list` and WARN banners.
+# Kept separate from builtin.toml so it can be updated independently.
+
+[providers.zai-api-key]
+name = "Z.ai / Bigmodel"
+rotate_url = "https://z.ai/account/apikeys"
+docs_url = "https://z.ai/docs/api"
+
+[providers.anthropic-key]
+name = "Anthropic"
+rotate_url = "https://console.anthropic.com/settings/keys"
+docs_url = "https://docs.anthropic.com/"
+
+[providers.github-pat]
+name = "GitHub Personal Access Token"
+rotate_url = "https://github.com/settings/tokens"
+docs_url = "https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+
+[providers.github-fine-pat]
+name = "GitHub fine-grained PAT"
+rotate_url = "https://github.com/settings/personal-access-tokens"
+
+[providers.figma-pat]
+name = "Figma"
+rotate_url = "https://www.figma.com/settings"
+
+[providers.pypi-token]
+name = "PyPI"
+rotate_url = "https://pypi.org/manage/account/token/"
+
+[providers.linear-key]
+name = "Linear"
+rotate_url = "https://linear.app/settings/api"
+
+[providers.stripe-sk]
+name = "Stripe"
+rotate_url = "https://dashboard.stripe.com/apikeys"
+
+[providers.openai-key]
+name = "OpenAI"
+rotate_url = "https://platform.openai.com/api-keys"
+
+[providers.npm-token]
+name = "npm"
+rotate_url = "https://www.npmjs.com/settings/~/tokens"
+
+[providers.slack-token]
+name = "Slack"
+rotate_url = "https://api.slack.com/apps"
+
+[providers.gitlab-pat]
+name = "GitLab"
+rotate_url = "https://gitlab.com/-/profile/personal_access_tokens"
