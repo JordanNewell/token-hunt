@@ -96,8 +96,6 @@ fingerprints = [
 Per-repo opt-out:
 ```bash
 export TOKEN_HUNT_DISABLE=1
-# or
-touch .token-hunt/disable
 ```
 
 ## Bypass

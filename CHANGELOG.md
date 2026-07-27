@@ -23,3 +23,6 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `rotations.log` JSONL store with 72-hour OVERDUE tracking.
 - Built-in providers: Z.ai, Anthropic, GitHub (classic + fine-grained), GitLab, Figma, PyPI, npm, Linear, Stripe, OpenAI, Slack.
 - Bash escape-hatch detection (the unique IP — `${VAR:+SET}${VAR:-UNSET}` bug class).
+- `TOKEN_HUNT_DISABLE=1` env var opt-out (skip all hooks).
+- `TOKEN_HUNT_ALLOW=1` env var bypass (one-shot override of BLOCK hooks).
+- Fail-closed behavior: scanner crashes BLOCK with bypass hint, never silently allow.
