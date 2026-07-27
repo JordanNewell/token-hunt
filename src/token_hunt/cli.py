@@ -110,9 +110,13 @@ def list_cmd(show_all):
 @click.option("--note", default="", help="Optional rotation note.")
 def close(leak_id, note):
     """Mark a leak as closed after rotation."""
-    # Implemented in Task 13
-    click.echo("not yet implemented", err=True)
-    sys.exit(1)
+    from token_hunt.store import Store
+    store = Store()
+    if store.close(leak_id, note=note):
+        click.echo(f"leak {leak_id} marked closed")
+    else:
+        click.echo(f"error: leak {leak_id} not found", err=True)
+        import sys; sys.exit(1)
 
 
 @main.command()
