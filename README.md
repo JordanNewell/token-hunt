@@ -6,7 +6,9 @@
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10+-blue)](https://www.python.org/)
 
-Hook-based secret scanner for **Claude Code**, **Cursor**, **Aider**, and other AI CLIs. Catches leaks when you paste, when your agent reads, and when your agent's tools return — not at commit time when it's already too late.
+Hook-based secret scanner for **Claude Code**. Catches leaks when you paste, when your agent reads, and when your agent's tools return — not at commit time when it's already too late.
+
+_Cursor and Aider supported via the CLI peer today (manual wiring); first-class plugin integrations ship in v0.2._
 
 ## Why
 
@@ -16,16 +18,19 @@ token-hunt catches at chat time. **Zero cloud, zero telemetry, fail-closed by de
 
 ## Install
 
-**As a Claude Code plugin** (recommended):
+**Pre-release (today):** not yet on PyPI or the Claude Code plugin marketplace. Install from source:
 
 ```bash
-claude plugin install token-hunt@JordanNewell
+git clone https://github.com/JordanNewell/token-hunt
+cd token-hunt
+pip install -e .
 ```
 
-**As a standalone CLI**:
+**Post-v0.1.0 publication** (once tag is pushed and CI completes):
 
 ```bash
-pip install token-hunt
+pip install token-hunt                              # standalone CLI
+claude plugin install token-hunt@JordanNewell       # Claude Code plugin
 ```
 
 ## 60-second demo
@@ -100,8 +105,10 @@ export TOKEN_HUNT_DISABLE=1
 
 ## Bypass
 
+Only the PreToolUse BLOCK hooks (Bash, Edit/Write) honor `TOKEN_HUNT_ALLOW`. The WARN hooks (UserPromptSubmit, PostToolUse:*) always fire — they don't block, so bypass is unnecessary.
+
 ```bash
-TOKEN_HUNT_ALLOW=1 <command>  # one-shot bypass (use sparingly)
+TOKEN_HUNT_ALLOW=1 <command>  # one-shot bypass of BLOCK-level hooks (use sparingly)
 ```
 
 ## Built-in providers
@@ -110,12 +117,14 @@ Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI 
 
 ## Comparison
 
+<sup>Verified 2026-07-27. Re-check competitor claims before citing in marketing.</sup>
+
 | Tool | Surface | Local-only | Fail-closed | Escape hatch | Fleet sync |
 |---|---|---|---|---|---|
 | **token-hunt** | Claude Code + CLI | yes | yes | **yes** | v0.2 |
 | sensitive-canary | Claude Code | yes | yes | no | no |
 | ggshield | Claude Code | no (cloud API) | no (fail-open) | no | no |
-| gitleaks | git only | yes | n/a | no | no |
+| gitleaks | git + filesystem + stdin | yes | n/a | no | no |
 
 ## License
 
