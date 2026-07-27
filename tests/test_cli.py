@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timezone, timedelta
 
 import pytest
 from click.testing import CliRunner
@@ -63,3 +64,43 @@ def test_scan_writes_to_rotations_log(runner, tmp_path, monkeypatch):
     log = fake_home / ".token-hunt" / "rotations.log"
     assert log.is_file()
     assert "zai-api-key" in log.read_text()
+
+
+def test_list_shows_open_leaks(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+    runner.invoke(main, ["scan", "--stdin"], input=ZAI_KEY)
+    result = runner.invoke(main, ["list"])
+    assert result.exit_code == 0
+    assert "zai-api-key" in result.output
+
+
+def test_list_marks_overdue_leaks(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+
+    log = fake_home / ".token-hunt" / "rotations.log"
+    log.parent.mkdir(parents=True)
+    old_ts = (datetime.now(timezone.utc) - timedelta(hours=73)).isoformat(timespec="seconds")
+    log.write_text(json.dumps({
+        "id": 1, "ts": old_ts, "kind": "zai-api-key", "source": "UserPromptSubmit",
+        "fingerprint": "abc", "rotate_url": "https://example.com",
+        "status": "open", "note": ""
+    }) + "\n")
+
+    result = runner.invoke(main, ["list"])
+    assert "OVERDUE" in result.output
+
+
+def test_list_empty_when_no_leaks(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+    result = runner.invoke(main, ["list"])
+    assert result.exit_code == 0
+    assert "no open" in result.output.lower() or "0 leak" in result.output.lower()
