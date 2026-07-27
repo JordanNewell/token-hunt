@@ -1,0 +1,98 @@
+# token-hunt builtin patterns. gitleaks-compatible format.
+# Each rule has: id, description, regex, keywords (for pre-filter), rotate_url.
+
+[[rules]]
+id = "zai-api-key"
+description = "Z.ai / Bigmodel API key (xxx.yyyy 49-char)"
+regex = '''[0-9a-f]{32}\.[A-Za-z0-9]{16}'''
+keywords = ["."]
+rotate_url = "https://z.ai/account/apikeys"
+
+[[rules]]
+id = "anthropic-key"
+description = "Anthropic API key"
+regex = '''sk-ant-[A-Za-z0-9_-]{95}'''
+keywords = ["sk-ant"]
+rotate_url = "https://console.anthropic.com/settings/keys"
+
+[[rules]]
+id = "github-pat"
+description = "GitHub Personal Access Token (classic)"
+regex = '''gh[pusr]_[A-Za-z0-9]{36}'''
+keywords = ["ghp_", "ghs_", "ghu_", "ghr_"]
+rotate_url = "https://github.com/settings/tokens"
+
+[[rules]]
+id = "github-fine-pat"
+description = "GitHub fine-grained PAT"
+regex = '''github_pat_[A-Za-z0-9]{22}_[A-Za-z0-9]{59}'''
+keywords = ["github_pat_"]
+rotate_url = "https://github.com/settings/personal-access-tokens"
+
+[[rules]]
+id = "figma-pat"
+description = "Figma personal access token"
+regex = '''figd_[A-Za-z0-9]{40}'''
+keywords = ["figd_"]
+rotate_url = "https://www.figma.com/settings"
+
+[[rules]]
+id = "pypi-token"
+description = "PyPI API token"
+regex = '''pypi-[A-Za-z0-9]{60,}'''
+keywords = ["pypi-"]
+rotate_url = "https://pypi.org/manage/account/token/"
+
+[[rules]]
+id = "linear-key"
+description = "Linear API key"
+regex = '''lin_api_[A-Za-z0-9]{40}'''
+keywords = ["lin_api_"]
+rotate_url = "https://linear.app/settings/api"
+
+[[rules]]
+id = "stripe-sk"
+description = "Stripe secret key"
+regex = '''sk_live_[A-Za-z0-9]{24,}'''
+keywords = ["sk_live_"]
+rotate_url = "https://dashboard.stripe.com/apikeys"
+
+[[rules]]
+id = "openai-key"
+description = "OpenAI API key"
+regex = '''sk-[A-Za-z0-9]{48}'''
+keywords = ["sk-"]
+rotate_url = "https://platform.openai.com/api-keys"
+
+[[rules]]
+id = "npm-token"
+description = "npm access token (auth token shape)"
+regex = '''npm_[A-Za-z0-9]{36}'''
+keywords = ["npm_"]
+rotate_url = "https://www.npmjs.com/settings/~/tokens"
+
+[[rules]]
+id = "slack-token"
+description = "Slack token (bot/user/app)"
+regex = '''xox[abpr]-[A-Za-z0-9-]{10,}'''
+keywords = ["xoxa-", "xoxb-", "xoxp-", "xoxr-"]
+rotate_url = "https://api.slack.com/apps"
+
+[[rules]]
+id = "gitlab-pat"
+description = "GitLab personal access token"
+regex = '''glpat-[A-Za-z0-9_-]{20}'''
+keywords = ["glpat-"]
+rotate_url = "https://gitlab.com/-/profile/personal_access_tokens"
+
+[allowlist]
+description = "Skip test fixtures and example files"
+paths = [
+    '''(^|/)node_modules/.*''',
+    '''(^|/)vendor/.*''',
+    '''(^|/)tests?/fixtures?/.*''',
+    '''(^|/)tests?/.*\.example$''',
+    '''.*\.example$''',
+    '''.*\.env\.sample$''',
+    '''.*\.env\.example$''',
+]
