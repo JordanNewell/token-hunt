@@ -27,6 +27,3 @@ ESCAPE_PATTERN_GREP_VAR = 'grep $DB_PASSWORD /etc/shadow'
 # Legit status check (should NOT fire)
 ESCAPE_SAFE_STATUS_CHECK = '[ -n "$ANTHROPIC_API_KEY" ] && echo SET'
 ESCAPE_SAFE_WC = 'wc -c <<< "$ANTHROPIC_API_KEY"'
-
-# Test fixture allowlist fingerprint (Task 7 uses this)
-ALLOWLISTED_FAKE_KEY = "test_fixture_deadbeefdeadbeefdeadbeefdeadbeef.ABCDefgh1234567890"

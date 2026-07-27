@@ -5,6 +5,9 @@
 
 set -e
 
+# Opt-out: TOKEN_HUNT_DISABLE=1 skips this hook entirely.
+[ "${TOKEN_HUNT_DISABLE:-0}" = "1" ] && exit 0
+
 input=$(cat 2>/dev/null || echo "")
 [ -z "$input" ] && exit 0
 

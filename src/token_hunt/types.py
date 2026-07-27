@@ -1,6 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from pathlib import Path
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -33,4 +32,3 @@ class ScanContext:
     detection_point: str
     cwd: str = "."
     file_path: str | None = None  # set for Read/Write scans
-    env_allow: tuple[str, ...] = ()  # TOKEN_HUNT_ALLOW-style overrides
