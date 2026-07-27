@@ -1,6 +1,9 @@
+import json
+
 import pytest
 from click.testing import CliRunner
 from token_hunt.cli import main
+from tests.fixtures import ZAI_KEY
 
 
 @pytest.fixture
@@ -21,3 +24,42 @@ def test_version_flag(runner):
     result = runner.invoke(main, ["--version"])
     assert result.exit_code == 0
     assert "0.1.0" in result.output
+
+
+def test_scan_finds_zai_key_in_stdin(runner):
+    result = runner.invoke(main, ["scan", "--stdin", "--context", "UserPromptSubmit",
+                                  "--format", "json"], input=f"key={ZAI_KEY}")
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert any(m["kind"] == "zai-api-key" for m in data["matches"])
+
+
+def test_scan_clean_text_exits_zero(runner):
+    result = runner.invoke(main, ["scan", "--stdin"], input="hello world")
+    assert result.exit_code == 0
+    assert "no leaks" in result.output.lower() or "0 leak" in result.output.lower()
+
+
+def test_scan_text_format_includes_rotate_url(runner):
+    result = runner.invoke(main, ["scan", "--stdin"], input=ZAI_KEY)
+    assert result.exit_code == 0
+    assert "z.ai" in result.output.lower() or "rotate" in result.output.lower()
+
+
+def test_scan_file_path(runner, tmp_path):
+    f = tmp_path / "secret.txt"
+    f.write_text(f"key={ZAI_KEY}")
+    result = runner.invoke(main, ["scan", str(f)])
+    assert result.exit_code == 0
+    assert "zai-api-key" in result.output
+
+
+def test_scan_writes_to_rotations_log(runner, tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setenv("USERPROFILE", str(fake_home))
+    monkeypatch.setenv("HOME", str(fake_home))
+    runner.invoke(main, ["scan", "--stdin"], input=ZAI_KEY)
+    log = fake_home / ".token-hunt" / "rotations.log"
+    assert log.is_file()
+    assert "zai-api-key" in log.read_text()
