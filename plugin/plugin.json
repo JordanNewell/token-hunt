@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin.json",
+  "name": "token-hunt",
+  "version": "0.1.0",
+  "description": "Catch secrets at chat time, not commit time. Hook-based scanner for Claude Code.",
+  "author": {
+    "name": "Jordan Newell",
+    "url": "https://jordannewell.com"
+  },
+  "homepage": "https://github.com/JordanNewell/token-hunt",
+  "repository": "https://github.com/JordanNewell/token-hunt",
+  "license": "MIT",
+  "keywords": ["security", "secrets", "leak-prevention", "claude-code", "hooks"],
+  "categories": ["security", "developer-tools"]
+}
