@@ -23,6 +23,7 @@ dependencies = [
     "tomli>=2.0.0; python_version < '3.11'",
     "platformdirs>=4.0.0",
     "watchdog>=4.0.0",
+    "click>=8.1.0",
 ]
 
 [project.optional-dependencies]
