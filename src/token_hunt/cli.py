@@ -79,9 +79,30 @@ def scan(path, stdin, context, fmt, no_log):
 @click.option("--all", "show_all", is_flag=True, help="Show closed leaks too.")
 def list_cmd(show_all):
     """List open leaks in rotations.log."""
-    # Implemented in Task 12
-    click.echo("not yet implemented", err=True)
-    sys.exit(1)
+    from token_hunt.store import Store
+
+    store = Store()
+    if show_all:
+        records = []
+        for line in store.path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                import json as _j
+                from token_hunt.store import LeakRecord
+                records.append(LeakRecord(**_j.loads(line)))
+    else:
+        records = store.list_open()
+
+    if not records:
+        click.echo("no open leaks" if not show_all else "no leaks recorded")
+        return
+
+    click.echo(f"{'ID':<5} {'KIND':<22} {'SOURCE':<22} {'WHEN':<20} {'STATUS':<10} URL")
+    for r in records:
+        ts_short = r.ts[:19].replace("T", " ")
+        status = r.status.upper()
+        if r.is_overdue:
+            status = "OVERDUE"
+        click.echo(f"{r.id:<5} {r.kind:<22} {r.source:<22} {ts_short:<20} {status:<10} {r.rotate_url}")
 
 
 @main.command()
