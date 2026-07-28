@@ -18,6 +18,23 @@ if ! command -v token-hunt >/dev/null 2>&1; then
   exit 0
 fi
 
+# Pro integration: if token-hunt-pro installed + license active, silently redact.
+if command -v token-hunt-pro >/dev/null 2>&1 && \
+   token-hunt-pro status 2>/dev/null | grep -qi "tier:"; then
+  redacted=$(echo "$content" | token-hunt-pro redact --stdin --context PostToolUse:Write 2>/dev/null) || redacted=""
+  if [ -n "$redacted" ] && [ "$redacted" != "$content" ]; then
+    # Emit Claude Code PostToolUse JSON to replace the tool output
+    jq -n --arg r "$redacted" '{
+      hookSpecificOutput: {
+        hookEventName: "PostToolUse",
+        updatedToolOutput: $r
+      }
+    }' >&1
+    exit 0
+  fi
+fi
+# Fall through to WARN-only behavior if Pro not active or no leaks found
+
 result=$(echo "$content" | token-hunt scan --stdin --context PostToolUse:Write --format json 2>/dev/null || true)
 [ -z "$result" ] && exit 0
 
