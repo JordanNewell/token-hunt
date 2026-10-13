@@ -3,7 +3,7 @@
 > Catch secrets at chat time, not commit time.
 
 [![release](https://img.shields.io/badge/release-0.1.0-blue)](https://github.com/JordanNewell/token-hunt/releases)
-[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![license](https://img.shields.io/badge/license-BUSL--1.1-green)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10+-blue)](https://www.python.org/)
 
 Hook-based secret scanner for **Claude Code**. Catches leaks when you paste, when your agent reads, and when your agent's tools return — not at commit time when it's already too late.
@@ -128,7 +128,7 @@ Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI 
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+BUSL-1.1. Source-available; converts to MIT on 2030-10-12. See [LICENSE](LICENSE).
 
 ## Security
 

@@ -7,11 +7,10 @@ name = "token-hunt"
 version = "0.1.0"
 description = "Catch secrets at chat time, not commit time. Hook-based scanner for Claude Code / Cursor / Aider."
 readme = "README.md"
-license = "MIT"
+license = "BUSL-1.1"
 requires-python = ">=3.10"
 authors = [{ name = "Jordan Newell", email = "jordan@jordannewell.com" }]
 classifiers = [
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
