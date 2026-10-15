@@ -115,9 +115,9 @@ TOKEN_HUNT_ALLOW=1 <command>  # one-shot bypass of BLOCK-level hooks (use sparin
 
 **Dev/infra:** Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI · npm · Linear · Stripe · OpenAI · Slack
 
-**LLM inference (36 rules, 2026-10-15):** OpenRouter · Groq · Together · Fireworks · Mistral · xAI · Perplexity · Hugging Face · Cerebras · Replicate · Vercel AI Gateway · NVIDIA NIM · Chutes · Requesty · Novita · Upstage · Baseten · Baidu Qianfan · fal.ai · Alibaba DashScope · Moonshot Kimi · Cohere · Scaleway
+**LLM inference (48 rules, 2026-10-15):** OpenRouter · Groq · Together · Fireworks · Mistral · xAI · Perplexity · Hugging Face · Cerebras · Replicate · Vercel AI Gateway · NVIDIA NIM · Chutes · Requesty · Novita · Upstage · Baseten · Baidu Qianfan · fal.ai · Alibaba DashScope · Moonshot Kimi · Cohere · Scaleway · SambaNova · Nebius · AI21 · OVHcloud · FriendliAI · GMI Cloud · Crusoe · Featherless · DeepInfra · Inference.net · BytePlus
 
-Providers whose keys are bare `sk-` (DeepSeek, StepFun, Moonshot, SiliconFlow, Poe, Qwen) are caught by the unattributed `sk-` rule; JWT-issued keys (MiniMax, DeepInfra scoped, Crusoe CLI) by the generic JWT rule. Providers with no publicly documented key format (SambaNova, Nebius, AI21, OVHcloud, FriendliAI, GMI Cloud, BytePlus, Featherless) fall back to the entropy pass — token-hunt ships no guessed shapes.
+Providers whose keys are bare `sk-` (DeepSeek, StepFun, Moonshot, SiliconFlow, Poe, Qwen) are caught by the unattributed `sk-` rule; JWT-issued keys (MiniMax, DeepInfra scoped, Crusoe CLI) by the generic JWT rule. Providers with no publicly documented key format (SambaNova, Nebius, AI21, OVHcloud, FriendliAI, GMI Cloud, Crusoe, Featherless, DeepInfra, Inference.net, BytePlus) get **keyword-gated opaque rules**: the provider name must appear in the scanned text AND a 32+-char token must be present. Low-precision by design — the value is attribution and the rotation URL in the warn banner, not shape confidence.
 
 ## token-hunt vs pat-scanner
 

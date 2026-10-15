@@ -151,6 +151,50 @@ rotate_url = "https://dashboard.cohere.com/api-keys"
 name = "Scaleway"
 rotate_url = "https://console.scaleway.com/organization/credentials"
 
+[providers.sambanova-key]
+name = "SambaNova"
+rotate_url = "https://cloud.sambanova.ai/apis"
+
+[providers.nebius-key]
+name = "Nebius Token Factory"
+rotate_url = "https://console.tokenfactory.nebius.com"
+
+[providers.ai21-key]
+name = "AI21"
+rotate_url = "https://studio.ai21.com"
+
+[providers.ovh-key]
+name = "OVHcloud AI Endpoints"
+rotate_url = "https://www.ovh.com/manager/"
+
+[providers.friendliai-key]
+name = "FriendliAI"
+rotate_url = "https://suite.friendli.ai"
+
+[providers.gmi-key]
+name = "GMI Cloud"
+rotate_url = "https://cloud.gmil.ai"
+
+[providers.crusoe-key]
+name = "Crusoe Cloud"
+rotate_url = "https://console.crusoecloud.com"
+
+[providers.featherless-key]
+name = "Featherless"
+rotate_url = "https://featherless.ai"
+
+[providers.deepinfra-key]
+name = "DeepInfra"
+rotate_url = "https://deepinfra.com/dash/api_keys"
+
+[providers.inference-net-key]
+name = "Inference.net"
+rotate_url = "https://inference.net"
+
+[providers.byteplus-key]
+name = "BytePlus ModelArk"
+rotate_url = "https://console.byteplus.com/modelark"
+
 [providers.generic-sk-key]
 name = "Unattributed sk- key (DeepSeek / StepFun / Moonshot / SiliconFlow / Poe / Qwen)"
 rotate_url = ""
