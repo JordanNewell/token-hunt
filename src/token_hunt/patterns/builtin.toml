@@ -1,5 +1,15 @@
 # token-hunt builtin patterns. gitleaks-compatible format.
 # Each rule has: id, description, regex, keywords (for pre-filter), rotate_url.
+#
+# Confidence provenance (verified 2026-10-15 against provider docs, gitleaks,
+# and trufflehog detector sources): rules below are either provider-documented
+# shapes or observed-in-wild shapes agreed by multiple scanners. Providers with
+# no verifiable key format (SambaNova, Nebius, AI21, OVHcloud, FriendliAI,
+# GMI Cloud, BytePlus, Featherless, DeepInfra) have NO regex rule — they fall
+# back to the entropy pass and the generic JWT rule. Do not add guessed shapes.
+#
+# Prefixless rules (mistral-key, cohere-key, scaleway-key) are keyword-gated:
+# the provider name must appear in the scanned text before the regex is tried.
 
 [[rules]]
 id = "zai-api-key"
@@ -59,8 +69,8 @@ rotate_url = "https://dashboard.stripe.com/apikeys"
 
 [[rules]]
 id = "openai-key"
-description = "OpenAI API key"
-regex = '''sk-[A-Za-z0-9]{48}'''
+description = "OpenAI API key (legacy + project shapes, T3BlbkFJ marker)"
+regex = '''sk-[A-Za-z0-9_-]{20,120}T3BlbkFJ[A-Za-z0-9_-]{20,}'''
 keywords = ["sk-"]
 rotate_url = "https://platform.openai.com/api-keys"
 
@@ -84,6 +94,185 @@ description = "GitLab personal access token"
 regex = '''glpat-[A-Za-z0-9_-]{20}'''
 keywords = ["glpat-"]
 rotate_url = "https://gitlab.com/-/profile/personal_access_tokens"
+
+# ---- LLM inference providers (curtis 53-provider parity) ----
+
+[[rules]]
+id = "openrouter-key"
+description = "OpenRouter API key"
+regex = '''sk-or-v1-[0-9a-f]{64}'''
+keywords = ["sk-or-"]
+rotate_url = "https://openrouter.ai/settings/keys"
+
+[[rules]]
+id = "groq-key"
+description = "Groq API key"
+regex = '''gsk_[A-Za-z0-9]{32,64}'''
+keywords = ["gsk_"]
+rotate_url = "https://console.groq.com/keys"
+
+[[rules]]
+id = "together-key"
+description = "Together AI API key"
+regex = '''tgp_v1_[A-Za-z0-9_-]{30,60}'''
+keywords = ["tgp_v1_"]
+rotate_url = "https://api.together.xyz/settings/api-keys"
+
+[[rules]]
+id = "fireworks-key"
+description = "Fireworks AI API key"
+regex = '''fw_[A-Za-z0-9]{16,48}'''
+keywords = ["fw_"]
+rotate_url = "https://fireworks.ai/account/api-keys"
+
+[[rules]]
+id = "xai-key"
+description = "xAI Grok API key"
+regex = '''xai-[A-Za-z0-9_]{60,100}'''
+keywords = ["xai-"]
+rotate_url = "https://console.x.ai"
+
+[[rules]]
+id = "perplexity-key"
+description = "Perplexity API key"
+regex = '''pplx-[A-Za-z0-9]{40,60}'''
+keywords = ["pplx-"]
+rotate_url = "https://www.perplexity.ai/settings/api"
+
+[[rules]]
+id = "huggingface-key"
+description = "Hugging Face token (user + legacy org)"
+regex = '''(hf_[A-Za-z0-9]{34,40}|api_org_[A-Za-z0-9]{34})'''
+keywords = ["hf_", "api_org_"]
+rotate_url = "https://huggingface.co/settings/tokens"
+
+[[rules]]
+id = "cerebras-key"
+description = "Cerebras API key"
+regex = '''csk[-_][a-z0-9]{40,60}'''
+keywords = ["csk"]
+rotate_url = "https://cloud.cerebras.ai"
+
+[[rules]]
+id = "replicate-key"
+description = "Replicate API key"
+regex = '''r8_[A-Za-z0-9_-]{30,45}'''
+keywords = ["r8_"]
+rotate_url = "https://replicate.com/account/api-tokens"
+
+[[rules]]
+id = "vercel-gateway-key"
+description = "Vercel AI Gateway key (vck_ family)"
+regex = '''vck_[A-Za-z0-9]{20,}'''
+keywords = ["vck_"]
+rotate_url = "https://vercel.com/account/settings/tokens"
+
+[[rules]]
+id = "nvidia-nim-key"
+description = "NVIDIA NIM API key"
+regex = '''nvapi-[A-Za-z0-9_-]{20,}'''
+keywords = ["nvapi-"]
+rotate_url = "https://build.nvidia.com"
+
+[[rules]]
+id = "chutes-key"
+description = "Chutes AI API key"
+regex = '''cpk_[A-Za-z0-9]{20,}'''
+keywords = ["cpk_"]
+rotate_url = "https://chutes.ai"
+
+[[rules]]
+id = "requesty-key"
+description = "Requesty API key"
+regex = '''rqsty-sk-[A-Za-z0-9_-]{10,}'''
+keywords = ["rqsty-sk-"]
+rotate_url = "https://app.requesty.ai/manage-api"
+
+[[rules]]
+id = "novita-key"
+description = "Novita AI API key (keyword-gated — bare sk_ shape)"
+regex = '''sk_[A-Za-z0-9]{20,}'''
+keywords = ["novita"]
+rotate_url = "https://novita.ai/dashboard/key"
+
+[[rules]]
+id = "upstage-key"
+description = "Upstage Solar API key (keyword-gated — bare up_ shape)"
+regex = '''up_[A-Za-z0-9]{20,}'''
+keywords = ["upstage"]
+rotate_url = "https://console.upstage.ai"
+
+[[rules]]
+id = "baseten-key"
+description = "Baseten API key"
+regex = '''b10_[A-Za-z0-9]{8}\.[A-Za-z0-9]{32}'''
+keywords = ["b10_"]
+rotate_url = "https://app.baseten.co/settings/api_keys"
+
+[[rules]]
+id = "qianfan-key"
+description = "Baidu Qianfan bearer key"
+regex = '''bce-v3/ALTAK-[A-Za-z0-9]{10,}/[A-Za-z0-9]{10,}'''
+keywords = ["bce-v3"]
+rotate_url = "https://console.bce.baidu.com/iam/#/iam/apikey/list"
+
+[[rules]]
+id = "fal-key"
+description = "fal.ai key (key_id:key_secret)"
+regex = '''[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{24,}'''
+keywords = ["fal"]
+rotate_url = "https://fal.ai/dashboard/keys"
+
+[[rules]]
+id = "dashscope-key"
+description = "Alibaba DashScope workspace/coding-plan key"
+regex = '''sk-(ws|sp)-[A-Za-z0-9]{20,}'''
+keywords = ["sk-ws-", "sk-sp-"]
+rotate_url = "https://modelstudio.console.alibabacloud.com"
+
+[[rules]]
+id = "moonshot-kimi-key"
+description = "Kimi for Coding managed key"
+regex = '''sk-kimi-[A-Za-z0-9]{10,}'''
+keywords = ["sk-kimi-"]
+rotate_url = "https://platform.kimi.ai/console/api-keys"
+
+[[rules]]
+id = "mistral-key"
+description = "Mistral API key (keyword-gated — no prefix)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32}(?![A-Za-z0-9])'''
+keywords = ["mistral"]
+rotate_url = "https://admin.mistral.ai/keys"
+
+[[rules]]
+id = "cohere-key"
+description = "Cohere API key (keyword-gated — no prefix)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{40}(?![A-Za-z0-9])'''
+keywords = ["cohere"]
+rotate_url = "https://dashboard.cohere.com/api-keys"
+
+[[rules]]
+id = "scaleway-key"
+description = "Scaleway API key (keyword-gated UUID)"
+regex = '''[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'''
+keywords = ["scaleway"]
+rotate_url = "https://console.scaleway.com/organization/credentials"
+
+# ---- generic fallbacks (unattributed shapes shared by several providers) ----
+
+[[rules]]
+id = "generic-sk-key"
+description = "Unattributed sk- 32-char key (DeepSeek / StepFun / Moonshot / SiliconFlow / Poe / Qwen shape)"
+regex = '''(?<![A-Za-z0-9])sk-[a-z0-9]{32}(?![A-Za-z0-9])'''
+keywords = []
+rotate_url = ""
+
+[[rules]]
+id = "generic-jwt"
+description = "Generic JWT (MiniMax / DeepInfra scoped / Crusoe CLI bearer)"
+regex = '''eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{5,}'''
+keywords = []
+rotate_url = ""
 
 [allowlist]
 description = "Skip test fixtures and example files"
