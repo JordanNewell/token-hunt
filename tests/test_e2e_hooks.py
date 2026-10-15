@@ -1,11 +1,9 @@
 """End-to-end test: simulate a full Claude Code session's worth of inputs
 through every hook. Verifies plumbing is correct across the whole stack."""
 
-import json
 import subprocess
 from pathlib import Path
 
-import pytest
 
 from tests.fixtures import (
     ZAI_KEY, ANTHROPIC_KEY, GITHUB_PAT, ESCAPE_PATTERN_DOLLAR_BRACE,

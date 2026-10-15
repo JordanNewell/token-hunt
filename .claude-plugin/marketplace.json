@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "JordanNewell",
+  "owner": {
+    "name": "Jordan Newell",
+    "url": "https://jordannewell.com"
+  },
+  "plugins": [
+    {
+      "name": "token-hunt",
+      "source": "./plugin",
+      "description": "Catch secrets at chat time, not commit time. Hook-based scanner for Claude Code.",
+      "version": "0.1.0",
+      "category": "security",
+      "keywords": ["security", "secrets", "leak-prevention", "hooks"]
+    }
+  ]
+}

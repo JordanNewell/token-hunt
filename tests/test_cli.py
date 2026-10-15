@@ -1,3 +1,4 @@
+import time
 import json
 from datetime import datetime, timezone, timedelta
 
@@ -129,8 +130,6 @@ def test_close_nonexistent_id_fails(runner, tmp_path, monkeypatch):
     assert result.exit_code != 0
 
 
-import time
-
 def test_watch_detects_new_file(runner, tmp_path, monkeypatch):
     fake_home = tmp_path / "home"
     fake_home.mkdir()
@@ -148,7 +147,7 @@ def test_watch_detects_new_file(runner, tmp_path, monkeypatch):
     t = threading.Thread(target=write_after_delay)
     t.start()
 
-    result = runner.invoke(main, ["watch", str(watch_dir), "--exit-after", "3"])
+    runner.invoke(main, ["watch", str(watch_dir), "--exit-after", "3"])
     t.join()
 
     log = fake_home / ".token-hunt" / "rotations.log"

@@ -1,11 +1,10 @@
 from __future__ import annotations
 import json
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, asdict
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
 
-from token_hunt.regex_scanner import _fingerprint  # reuse SHA-256 helper
 
 OVERDUE_HOURS = 72  # matches feedback_security-md-fleet-conventions
 
