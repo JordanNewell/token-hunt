@@ -3,7 +3,7 @@ from token_hunt.regex_scanner import scan_regex, _fingerprint
 from token_hunt.patterns_loader import load_builtin_rules
 from token_hunt.types import ScanContext
 from tests.fixtures import (
-    ZAI_KEY, ANTHROPIC_KEY, GITHUB_PAT, FIGMA_PAT, PYPI_TOKEN,
+    ZAI_KEY, ANTHROPIC_KEY, GITHUB_PAT,
 )
 
 

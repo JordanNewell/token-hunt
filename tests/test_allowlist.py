@@ -1,7 +1,6 @@
 import pytest
 from token_hunt.allowlist import (
     apply_allowlist, is_path_allowed, load_fingerprint_allowlist,
-    ALLOWED_PATH_PATTERNS,
 )
 from token_hunt.regex_scanner import _fingerprint
 from token_hunt.types import Match, ScanContext

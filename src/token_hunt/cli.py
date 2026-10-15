@@ -23,7 +23,6 @@ def main() -> None:
 def scan(path, stdin, context, fmt, no_log):
     """Scan a file or stdin for secret leaks."""
     import json as _json
-    import sys
     from pathlib import Path as _Path
 
     from token_hunt.engine import scan as scan_engine
@@ -116,7 +115,7 @@ def close(leak_id, note):
         click.echo(f"leak {leak_id} marked closed")
     else:
         click.echo(f"error: leak {leak_id} not found", err=True)
-        import sys; sys.exit(1)
+        raise click.exceptions.Exit(1)
 
 
 @main.command()
@@ -135,9 +134,7 @@ def watch(path, context, exit_after):
     from token_hunt.engine import scan as scan_engine
     from token_hunt.store import LeakRecord, Store
     from token_hunt.types import ScanContext
-    from dataclasses import asdict
     import datetime as _dt
-    import json as _json
 
     watched = _Path(path)
     click.echo(f"watching {watched} for new files...")

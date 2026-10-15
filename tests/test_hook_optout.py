@@ -1,6 +1,5 @@
 """Test the TOKEN_HUNT_DISABLE opt-out. Verified after final code review
 flagged that README documented the env var but no hook implemented it."""
-import os
 
 import pytest
 
