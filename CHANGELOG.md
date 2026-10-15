@@ -11,7 +11,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Generic fallback rules: unattributed `sk-` 32-char key (DeepSeek / StepFun / Moonshot / SiliconFlow / Poe / Qwen shape) and generic JWT (MiniMax / DeepInfra / Crusoe).
 - OpenAI rule tightened to the T3BlbkFJ marker shape — no longer double-fires with the generic `sk-` rule.
 - Prefixless shapes (Mistral, Cohere, Scaleway) and generic-prefix shapes (Novita, Upstage) are keyword-gated: the provider name must appear in the scanned text before the regex is tried.
-- Providers with no publicly documented key format get no regex rule — they fall back to the entropy pass. Shapes are provider-documented or multi-scanner-observed only; no guessed regexes.
+- Providers with no publicly documented key format get **keyword-gated opaque rules** (SambaNova, Nebius, AI21, OVHcloud, FriendliAI, GMI Cloud, Crusoe, Featherless, DeepInfra, Inference.net, BytePlus): provider name in text + 32+-char token. Low-precision by design — attribution + rotation URL, not shape confidence. Shape-verified rules stay provider-documented or multi-scanner-observed only; no guessed regexes.
 
 ### Planned for v0.1.1
 - Silent redaction via `hookSpecificOutput.updatedToolOutput` for PostToolUse hooks (replaces current WARN-only behavior for Bash/Read/Write outputs)

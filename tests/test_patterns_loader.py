@@ -5,7 +5,7 @@ from token_hunt.patterns_loader import load_builtin_rules, Rule
 def test_load_builtin_rules_returns_list():
     rules = load_builtin_rules()
     assert isinstance(rules, list)
-    assert len(rules) == 37
+    assert len(rules) == 48
 
 
 def test_rules_have_required_fields():

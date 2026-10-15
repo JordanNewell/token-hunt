@@ -2,14 +2,16 @@
 # Each rule has: id, description, regex, keywords (for pre-filter), rotate_url.
 #
 # Confidence provenance (verified 2026-10-15 against provider docs, gitleaks,
-# and trufflehog detector sources): rules below are either provider-documented
-# shapes or observed-in-wild shapes agreed by multiple scanners. Providers with
-# no verifiable key format (SambaNova, Nebius, AI21, OVHcloud, FriendliAI,
-# GMI Cloud, BytePlus, Featherless, DeepInfra) have NO regex rule — they fall
-# back to the entropy pass and the generic JWT rule. Do not add guessed shapes.
+# and trufflehog detector sources): shape rules below are either
+# provider-documented shapes or observed-in-wild shapes agreed by multiple
+# scanners. Providers with no verifiable key format (SambaNova, Nebius, AI21,
+# OVHcloud, FriendliAI, GMI Cloud, BytePlus, Featherless, DeepInfra,
+# Inference.net, Crusoe) use keyword-gated opaque rules — see that section.
+# Do not add guessed shapes.
 #
-# Prefixless rules (mistral-key, cohere-key, scaleway-key) are keyword-gated:
-# the provider name must appear in the scanned text before the regex is tried.
+# Keyword-gated rules (mistral-key, cohere-key, scaleway-key, and the opaque
+# tier) only fire when the provider name appears in the scanned text before
+# the regex is tried.
 
 [[rules]]
 id = "zai-api-key"
@@ -257,6 +259,88 @@ description = "Scaleway API key (keyword-gated UUID)"
 regex = '''[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'''
 keywords = ["scaleway"]
 rotate_url = "https://console.scaleway.com/organization/credentials"
+
+# ---- keyword-gated opaque keys (no provider-documented shape).
+# Fires only when the provider name appears in the scanned text AND a 32+-char
+# alphanumeric token is present. Low-precision by design — value is attribution
+# + rotation URL, not shape confidence. Same pattern as mistral/cohere above.
+
+[[rules]]
+id = "sambanova-key"
+description = "SambaNova API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["sambanova"]
+rotate_url = "https://cloud.sambanova.ai/apis"
+
+[[rules]]
+id = "nebius-key"
+description = "Nebius Token Factory key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["nebius"]
+rotate_url = "https://console.tokenfactory.nebius.com"
+
+[[rules]]
+id = "ai21-key"
+description = "AI21 API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["ai21"]
+rotate_url = "https://studio.ai21.com"
+
+[[rules]]
+id = "ovh-key"
+description = "OVHcloud AI Endpoints token (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["ovh"]
+rotate_url = "https://www.ovh.com/manager/"
+
+[[rules]]
+id = "friendliai-key"
+description = "FriendliAI token (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["friendli"]
+rotate_url = "https://suite.friendli.ai"
+
+[[rules]]
+id = "gmi-key"
+description = "GMI Cloud API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["gmi"]
+rotate_url = "https://cloud.gmil.ai"
+
+[[rules]]
+id = "crusoe-key"
+description = "Crusoe Cloud access key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9_-]{22,}(?![A-Za-z0-9])'''
+keywords = ["crusoe"]
+rotate_url = "https://console.crusoecloud.com"
+
+[[rules]]
+id = "featherless-key"
+description = "Featherless API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["featherless"]
+rotate_url = "https://featherless.ai"
+
+[[rules]]
+id = "deepinfra-key"
+description = "DeepInfra API key (keyword-gated opaque; scoped JWTs via generic-jwt)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["deepinfra"]
+rotate_url = "https://deepinfra.com/dash/api_keys"
+
+[[rules]]
+id = "inference-net-key"
+description = "Inference.net API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["inference.net"]
+rotate_url = "https://inference.net"
+
+[[rules]]
+id = "byteplus-key"
+description = "BytePlus ModelArk API key (keyword-gated opaque)"
+regex = '''(?<![A-Za-z0-9])[A-Za-z0-9]{32,}(?![A-Za-z0-9])'''
+keywords = ["byteplus"]
+rotate_url = "https://console.byteplus.com/modelark"
 
 # ---- generic fallbacks (unattributed shapes shared by several providers) ----
 

@@ -1,7 +1,30 @@
-# token-hunt test fixtures: shape-correct FAKE keys constructed for the
-# builtin-provider rule tests (see tests/test_builtin_providers.py docstring).
-# No real credentials ship in this repo. Fingerprints below verified FP 2026-10-15.
-tests/test_builtin_providers.py:jwt:88
+# token-hunt test fixtures: shape-correct FAKE keys generated for
+# tests/test_builtin_providers.py — not real credentials. No real secrets
+# ship in this repo. Fingerprints below verified 2026-10-15.
+tests/__pycache__/test_builtin_providers.cpython-313-pytest-8.4.2.pyc:jwt:13
+tests/test_builtin_providers.py:generic-api-key:100
+tests/test_builtin_providers.py:generic-api-key:101
+tests/test_builtin_providers.py:generic-api-key:103
+tests/test_builtin_providers.py:generic-api-key:104
+tests/test_builtin_providers.py:generic-api-key:106
+tests/test_builtin_providers.py:generic-api-key:107
+tests/test_builtin_providers.py:generic-api-key:109
+tests/test_builtin_providers.py:generic-api-key:110
+tests/test_builtin_providers.py:generic-api-key:112
+tests/test_builtin_providers.py:generic-api-key:113
+tests/test_builtin_providers.py:generic-api-key:116
+tests/test_builtin_providers.py:generic-api-key:118
+tests/test_builtin_providers.py:generic-api-key:119
+tests/test_builtin_providers.py:generic-api-key:121
+tests/test_builtin_providers.py:generic-api-key:122
+tests/test_builtin_providers.py:generic-api-key:148
+tests/test_builtin_providers.py:generic-api-key:91
+tests/test_builtin_providers.py:generic-api-key:92
+tests/test_builtin_providers.py:generic-api-key:94
+tests/test_builtin_providers.py:generic-api-key:95
+tests/test_builtin_providers.py:generic-api-key:97
+tests/test_builtin_providers.py:generic-api-key:98
+tests/test_builtin_providers.py:generic-api-key:115
 tests/test_builtin_providers.py:generic-api-key:25
 tests/test_builtin_providers.py:generic-api-key:46
 tests/test_builtin_providers.py:generic-api-key:49
@@ -19,4 +42,4 @@ tests/test_builtin_providers.py:generic-api-key:76
 tests/test_builtin_providers.py:generic-api-key:79
 tests/test_builtin_providers.py:generic-api-key:82
 tests/test_builtin_providers.py:generic-api-key:85
-tests/test_builtin_providers.py:generic-api-key:115
+tests/test_builtin_providers.py:jwt:88
