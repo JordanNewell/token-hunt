@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/JordanNewell/token-hunt",
   "repository": "https://github.com/JordanNewell/token-hunt",
-  "license": "MIT",
+  "license": "BUSL-1.1",
   "keywords": ["security", "secrets", "leak-prevention", "claude-code", "hooks"],
   "categories": ["security", "developer-tools"]
 }
