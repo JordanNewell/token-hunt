@@ -1,0 +1,22 @@
+# token-hunt test fixtures: shape-correct FAKE keys constructed for the
+# builtin-provider rule tests (see tests/test_builtin_providers.py docstring).
+# No real credentials ship in this repo. Fingerprints below verified FP 2026-10-15.
+tests/test_builtin_providers.py:jwt:88
+tests/test_builtin_providers.py:generic-api-key:25
+tests/test_builtin_providers.py:generic-api-key:46
+tests/test_builtin_providers.py:generic-api-key:49
+tests/test_builtin_providers.py:generic-api-key:52
+tests/test_builtin_providers.py:generic-api-key:53
+tests/test_builtin_providers.py:generic-api-key:55
+tests/test_builtin_providers.py:generic-api-key:58
+tests/test_builtin_providers.py:generic-api-key:61
+tests/test_builtin_providers.py:generic-api-key:62
+tests/test_builtin_providers.py:generic-api-key:70
+tests/test_builtin_providers.py:generic-api-key:71
+tests/test_builtin_providers.py:generic-api-key:73
+tests/test_builtin_providers.py:generic-api-key:74
+tests/test_builtin_providers.py:generic-api-key:76
+tests/test_builtin_providers.py:generic-api-key:79
+tests/test_builtin_providers.py:generic-api-key:82
+tests/test_builtin_providers.py:generic-api-key:85
+tests/test_builtin_providers.py:generic-api-key:115

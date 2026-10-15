@@ -5,7 +5,7 @@ from token_hunt.patterns_loader import load_builtin_rules, Rule
 def test_load_builtin_rules_returns_list():
     rules = load_builtin_rules()
     assert isinstance(rules, list)
-    assert len(rules) == 12
+    assert len(rules) == 37
 
 
 def test_rules_have_required_fields():
@@ -14,7 +14,7 @@ def test_rules_have_required_fields():
         assert isinstance(rule, Rule)
         assert rule.id
         assert rule.regex
-        assert rule.rotate_url
+        assert rule.rotate_url.startswith("https://") or rule.id.startswith("generic-")
 
 
 def test_zai_rule_present():

@@ -51,3 +51,110 @@ rotate_url = "https://api.slack.com/apps"
 [providers.gitlab-pat]
 name = "GitLab"
 rotate_url = "https://gitlab.com/-/profile/personal_access_tokens"
+
+[providers.openrouter-key]
+name = "OpenRouter"
+rotate_url = "https://openrouter.ai/settings/keys"
+docs_url = "https://openrouter.ai/docs/api-reference/authentication"
+
+[providers.groq-key]
+name = "Groq"
+rotate_url = "https://console.groq.com/keys"
+docs_url = "https://console.groq.com/docs/api-keys"
+
+[providers.together-key]
+name = "Together AI"
+rotate_url = "https://api.together.xyz/settings/api-keys"
+
+[providers.fireworks-key]
+name = "Fireworks AI"
+rotate_url = "https://fireworks.ai/account/api-keys"
+docs_url = "https://docs.fireworks.ai/api-reference/authentication"
+
+[providers.xai-key]
+name = "xAI"
+rotate_url = "https://console.x.ai"
+
+[providers.perplexity-key]
+name = "Perplexity"
+rotate_url = "https://www.perplexity.ai/settings/api"
+docs_url = "https://docs.perplexity.ai/guides/api-key-management"
+
+[providers.huggingface-key]
+name = "Hugging Face"
+rotate_url = "https://huggingface.co/settings/tokens"
+docs_url = "https://huggingface.co/docs/hub/security-tokens"
+
+[providers.cerebras-key]
+name = "Cerebras"
+rotate_url = "https://cloud.cerebras.ai"
+
+[providers.replicate-key]
+name = "Replicate"
+rotate_url = "https://replicate.com/account/api-tokens"
+
+[providers.vercel-gateway-key]
+name = "Vercel AI Gateway"
+rotate_url = "https://vercel.com/account/settings/tokens"
+
+[providers.nvidia-nim-key]
+name = "NVIDIA NIM"
+rotate_url = "https://build.nvidia.com"
+
+[providers.chutes-key]
+name = "Chutes AI"
+rotate_url = "https://chutes.ai"
+
+[providers.requesty-key]
+name = "Requesty"
+rotate_url = "https://app.requesty.ai/manage-api"
+
+[providers.novita-key]
+name = "Novita AI"
+rotate_url = "https://novita.ai/dashboard/key"
+docs_url = "https://docs.novita.ai/guides/llm-api-keys"
+
+[providers.upstage-key]
+name = "Upstage"
+rotate_url = "https://console.upstage.ai"
+
+[providers.baseten-key]
+name = "Baseten"
+rotate_url = "https://app.baseten.co/settings/api_keys"
+docs_url = "https://docs.baseten.co/organization/api-keys"
+
+[providers.qianfan-key]
+name = "Baidu Qianfan"
+rotate_url = "https://console.bce.baidu.com/iam/#/iam/apikey/list"
+
+[providers.fal-key]
+name = "fal.ai"
+rotate_url = "https://fal.ai/dashboard/keys"
+
+[providers.dashscope-key]
+name = "Alibaba Model Studio (DashScope)"
+rotate_url = "https://modelstudio.console.alibabacloud.com"
+
+[providers.moonshot-kimi-key]
+name = "Moonshot Kimi"
+rotate_url = "https://platform.kimi.ai/console/api-keys"
+
+[providers.mistral-key]
+name = "Mistral"
+rotate_url = "https://admin.mistral.ai/keys"
+
+[providers.cohere-key]
+name = "Cohere"
+rotate_url = "https://dashboard.cohere.com/api-keys"
+
+[providers.scaleway-key]
+name = "Scaleway"
+rotate_url = "https://console.scaleway.com/organization/credentials"
+
+[providers.generic-sk-key]
+name = "Unattributed sk- key (DeepSeek / StepFun / Moonshot / SiliconFlow / Poe / Qwen)"
+rotate_url = ""
+
+[providers.generic-jwt]
+name = "JWT bearer token (MiniMax / DeepInfra / Crusoe)"
+rotate_url = ""

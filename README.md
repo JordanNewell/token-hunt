@@ -113,7 +113,11 @@ TOKEN_HUNT_ALLOW=1 <command>  # one-shot bypass of BLOCK-level hooks (use sparin
 
 ## Built-in providers
 
-Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI · npm · Linear · Stripe · OpenAI · Slack
+**Dev/infra:** Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI · npm · Linear · Stripe · OpenAI · Slack
+
+**LLM inference (36 rules, 2026-10-15):** OpenRouter · Groq · Together · Fireworks · Mistral · xAI · Perplexity · Hugging Face · Cerebras · Replicate · Vercel AI Gateway · NVIDIA NIM · Chutes · Requesty · Novita · Upstage · Baseten · Baidu Qianfan · fal.ai · Alibaba DashScope · Moonshot Kimi · Cohere · Scaleway
+
+Providers whose keys are bare `sk-` (DeepSeek, StepFun, Moonshot, SiliconFlow, Poe, Qwen) are caught by the unattributed `sk-` rule; JWT-issued keys (MiniMax, DeepInfra scoped, Crusoe CLI) by the generic JWT rule. Providers with no publicly documented key format (SambaNova, Nebius, AI21, OVHcloud, FriendliAI, GMI Cloud, BytePlus, Featherless) fall back to the entropy pass — token-hunt ships no guessed shapes.
 
 ## token-hunt vs pat-scanner
 
