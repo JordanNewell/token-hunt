@@ -115,6 +115,12 @@ TOKEN_HUNT_ALLOW=1 <command>  # one-shot bypass of BLOCK-level hooks (use sparin
 
 Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI · npm · Linear · Stripe · OpenAI · Slack
 
+## token-hunt vs pat-scanner
+
+[pat-scanner](https://github.com/JordanNewell/pat-scanner) is the one-command Claude Code plugin: one hook, 13 credential classes, regex matching. Install it and you're covered.
+
+token-hunt is the engine underneath: the Python package, the CLI (`scan / list / close / watch`), six hooks with block-and-rotate behavior, the allowlist, and the bash escape-hatch runtime detector — the class regex can't see. Use pat-scanner when you just want the guard. Use token-hunt when you want the full scanner and the rotation workflow.
+
 ## Comparison
 
 <sup>Verified 2026-07-27. Re-check competitor claims before citing in marketing.</sup>
@@ -125,6 +131,27 @@ Z.ai · Anthropic · GitHub (classic + fine-grained) · GitLab · Figma · PyPI 
 | sensitive-canary | Claude Code | yes | yes | no | no |
 | ggshield | Claude Code | no (cloud API) | no (fail-open) | no | no |
 | gitleaks | git + filesystem + stdin | yes | n/a | no | no |
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest                 # full suite (85 tests)
+pytest --cov=token_hunt
+ruff check .           # lint (line-length 100, target py310)
+```
+
+Python ≥ 3.10. Runtime deps: `click` (CLI), `platformdirs` (config paths),
+`watchdog` (watch mode), `tomli` (< 3.11 only).
+
+### Layout
+
+```
+src/token_hunt/    engine, regex scanner, escape-hatch detector, entropy,
+                   patterns loader, allowlist, JSONL store, click CLI
+plugin/            Claude Code plugin manifest + 6 hook shell scripts
+tests/             unit + hook wiring + e2e tests
+```
 
 ## License
 
