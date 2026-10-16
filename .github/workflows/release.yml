@@ -24,8 +24,12 @@ jobs:
       # Publish only when the PYPI_API_TOKEN secret is set on the repo.
       # 0.1.0 is already on PyPI (manual publish); re-upload of an existing
       # version is rejected by PyPI, so future tags must bump the version first.
-      - run: twine upload dist/*
-        if: ${{ secrets.PYPI_API_TOKEN != '' }}
+      - run: |
+          if [ -z "$PYPI_API_TOKEN" ]; then
+            echo "PYPI_API_TOKEN not set on repo — skipping PyPI publish"
+            exit 0
+          fi
+          twine upload dist/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
