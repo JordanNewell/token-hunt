@@ -1,11 +1,12 @@
-import time
 import json
-from datetime import datetime, timezone, timedelta
+import time
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from click.testing import CliRunner
-from token_hunt.cli import main
+
 from tests.fixtures import ZAI_KEY
+from token_hunt.cli import main
 
 
 @pytest.fixture

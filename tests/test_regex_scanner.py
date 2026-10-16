@@ -1,10 +1,13 @@
 import pytest
-from token_hunt.regex_scanner import scan_regex, _fingerprint
-from token_hunt.patterns_loader import load_builtin_rules
-from token_hunt.types import ScanContext
+
 from tests.fixtures import (
-    ZAI_KEY, ANTHROPIC_KEY, GITHUB_PAT,
+    ANTHROPIC_KEY,
+    GITHUB_PAT,
+    ZAI_KEY,
 )
+from token_hunt.patterns_loader import load_builtin_rules
+from token_hunt.regex_scanner import _fingerprint, scan_regex
+from token_hunt.types import ScanContext
 
 
 @pytest.fixture

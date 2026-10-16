@@ -1,11 +1,16 @@
 import pytest
-from token_hunt.escape import scan_escape, _is_legit_status_check
-from token_hunt.types import ScanContext
+
 from tests.fixtures import (
-    ESCAPE_PATTERN_DOLLAR_BRACE, ESCAPE_PATTERN_ECHO, ESCAPE_PATTERN_PRINTENV,
-    ESCAPE_PATTERN_ENV_GREP, ESCAPE_PATTERN_GREP_VAR,
-    ESCAPE_SAFE_STATUS_CHECK, ESCAPE_SAFE_WC,
+    ESCAPE_PATTERN_DOLLAR_BRACE,
+    ESCAPE_PATTERN_ECHO,
+    ESCAPE_PATTERN_ENV_GREP,
+    ESCAPE_PATTERN_GREP_VAR,
+    ESCAPE_PATTERN_PRINTENV,
+    ESCAPE_SAFE_STATUS_CHECK,
+    ESCAPE_SAFE_WC,
 )
+from token_hunt.escape import _is_legit_status_check, scan_escape
+from token_hunt.types import ScanContext
 
 
 @pytest.fixture

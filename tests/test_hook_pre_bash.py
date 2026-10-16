@@ -1,4 +1,4 @@
-from tests.fixtures import ZAI_KEY, ESCAPE_PATTERN_DOLLAR_BRACE, ESCAPE_SAFE_STATUS_CHECK
+from tests.fixtures import ESCAPE_PATTERN_DOLLAR_BRACE, ESCAPE_SAFE_STATUS_CHECK, ZAI_KEY
 from tests.hooktest import run_hook
 
 HOOK = "plugin/hooks/pre-bash.sh"

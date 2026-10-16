@@ -1,9 +1,10 @@
 import json
-import pytest
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from token_hunt.store import Store, LeakRecord
+import pytest
+
+from token_hunt.store import LeakRecord, Store
 
 
 @pytest.fixture

@@ -31,7 +31,7 @@ def run_hook(script_relative_path: str, payload: dict, timeout: int = 10) -> sub
     """
     return subprocess.run(
         [find_bash(), script_relative_path],
-        input=json.dumps(payload),
+        input=json.dumps(payload), check=False,
         capture_output=True,
         text=True,
         encoding="utf-8",

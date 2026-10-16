@@ -1,4 +1,5 @@
 import pytest
+
 from token_hunt.entropy import scan_entropy, shannon_entropy
 from token_hunt.types import ScanContext
 

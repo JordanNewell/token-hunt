@@ -1,10 +1,9 @@
 from __future__ import annotations
-import json
-from dataclasses import dataclass, asdict
-from datetime import datetime, timezone, timedelta
-from pathlib import Path
-from typing import Optional
 
+import json
+from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 OVERDUE_HOURS = 72  # matches feedback_security-md-fleet-conventions
 
@@ -12,7 +11,7 @@ OVERDUE_HOURS = 72  # matches feedback_security-md-fleet-conventions
 @dataclass
 class LeakRecord:
     """One row in rotations.log."""
-    id: Optional[int]
+    id: int | None
     ts: str  # ISO 8601 UTC
     kind: str
     source: str  # detection_point
