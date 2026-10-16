@@ -82,8 +82,8 @@ CASES = [
      "scaleway SCW_ACCESS_KEY=0123abcd-12ab-34cd-56ef-0123456789ab",
      "id = 0123abcd-12ab-34cd-56ef-0123456789ab"),  # no keyword — no fire
     ("generic-sk-key",
-     "DEEPSEEK_API_KEY=sk-0123456789abcdefghijklmnopqrstuv",
-     "sk-0123456789abcdefghijklmnopqrstuvXYZ"),  # trailing caps — lookaround blocks
+     "DEEPSEEK_API_KEY=sk-q7w8e9r1t2y3u4i5o6p1a2s3d4f5g6hz",
+     "sk-q7w8e9r1t2y3u4i5o6p1a2s3d4f5g6hzXYZ"),  # trailing caps — lookaround blocks
     ("generic-jwt",
      "MINIMAX token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJVadQssw5c",
      "not.a.jwt"),
