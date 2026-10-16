@@ -1,10 +1,13 @@
 import pytest
+
+from tests.fixtures import ZAI_KEY
 from token_hunt.allowlist import (
-    apply_allowlist, is_path_allowed, load_fingerprint_allowlist,
+    apply_allowlist,
+    is_path_allowed,
+    load_fingerprint_allowlist,
 )
 from token_hunt.regex_scanner import _fingerprint
 from token_hunt.types import Match, ScanContext
-from tests.fixtures import ZAI_KEY
 
 
 @pytest.fixture

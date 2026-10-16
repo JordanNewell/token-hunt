@@ -1,5 +1,6 @@
 import pytest
-from token_hunt.patterns_loader import load_builtin_rules, Rule
+
+from token_hunt.patterns_loader import Rule, load_builtin_rules
 
 
 def test_load_builtin_rules_returns_list():

@@ -1,5 +1,6 @@
 """token-hunt CLI entry point."""
 from __future__ import annotations
+
 import sys
 
 import click
@@ -23,12 +24,12 @@ def main() -> None:
 def scan(path, stdin, context, fmt, no_log):
     """Scan a file or stdin for secret leaks."""
     import json as _json
+    from dataclasses import asdict
     from pathlib import Path as _Path
 
     from token_hunt.engine import scan as scan_engine
     from token_hunt.store import LeakRecord, Store
     from token_hunt.types import ScanContext
-    from dataclasses import asdict
 
     if stdin:
         text = sys.stdin.read()
@@ -86,6 +87,7 @@ def list_cmd(show_all):
         for line in store.path.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 import json as _j
+
                 from token_hunt.store import LeakRecord
                 records.append(LeakRecord(**_j.loads(line)))
     else:
@@ -125,6 +127,7 @@ def close(leak_id, note):
               help="Exit after N seconds (0 = run forever). Test helper.")
 def watch(path, context, exit_after):
     """Watch a directory for new transcript files and scan them."""
+    import datetime as _dt
     import time as _time
     from pathlib import Path as _Path
 
@@ -134,7 +137,6 @@ def watch(path, context, exit_after):
     from token_hunt.engine import scan as scan_engine
     from token_hunt.store import LeakRecord, Store
     from token_hunt.types import ScanContext
-    import datetime as _dt
 
     watched = _Path(path)
     click.echo(f"watching {watched} for new files...")

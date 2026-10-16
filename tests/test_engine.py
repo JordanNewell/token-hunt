@@ -1,9 +1,13 @@
 import pytest
-from token_hunt.engine import scan, ScanResult
-from token_hunt.types import ScanContext
+
 from tests.fixtures import (
-    ZAI_KEY, ANTHROPIC_KEY, ESCAPE_PATTERN_DOLLAR_BRACE, ESCAPE_SAFE_STATUS_CHECK,
+    ANTHROPIC_KEY,
+    ESCAPE_PATTERN_DOLLAR_BRACE,
+    ESCAPE_SAFE_STATUS_CHECK,
+    ZAI_KEY,
 )
+from token_hunt.engine import ScanResult, scan
+from token_hunt.types import ScanContext
 
 
 @pytest.fixture

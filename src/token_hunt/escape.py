@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import re
 
 from token_hunt.types import Match, ScanContext
@@ -50,11 +51,9 @@ SECRET_NAME_PREFIXES = (
 
 def _is_secret_var_name(name: str) -> bool:
     upper = name.upper()
-    if any(upper.endswith(s) for s in SECRET_NAME_SUFFIXES):
-        return True
-    if any(upper.startswith(p) for p in SECRET_NAME_PREFIXES):
-        return True
-    return False
+    return any(upper.endswith(s) for s in SECRET_NAME_SUFFIXES) or any(
+        upper.startswith(p) for p in SECRET_NAME_PREFIXES
+    )
 
 
 def _is_legit_status_check(line: str) -> bool:

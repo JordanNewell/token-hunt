@@ -4,10 +4,12 @@ through every hook. Verifies plumbing is correct across the whole stack."""
 import subprocess
 from pathlib import Path
 
-
 from tests.fixtures import (
-    ZAI_KEY, ANTHROPIC_KEY, GITHUB_PAT, ESCAPE_PATTERN_DOLLAR_BRACE,
+    ANTHROPIC_KEY,
+    ESCAPE_PATTERN_DOLLAR_BRACE,
     ESCAPE_SAFE_STATUS_CHECK,
+    GITHUB_PAT,
+    ZAI_KEY,
 )
 from tests.hooktest import run_hook
 
@@ -90,7 +92,7 @@ def test_e2e_all_hooks_handle_empty_input():
         bash_exe = shutil.which("bash.exe") or shutil.which("bash") or "bash"
         r = subprocess.run(
             [bash_exe, hook],
-            input="",
+            input="", check=False,
             capture_output=True, text=True,
             encoding="utf-8", errors="replace",
             timeout=5,
